@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  Static Website Hosting with CloudFront and S3 using Origin Access Control (OAC)
+
+Parameters:
+  SiteBucketName:
+    Type: String
+    Description: S3 bucket name for hosting the website
+    Default: my-static-site-demo
+
+Resources:
+  SiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref SiteBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+  OAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "${AWS::StackName}-oac"
+        Description: Access control for CloudFront to S3
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: index.html
+        Origins:
+          - DomainName: !GetAtt SiteBucket.RegionalDomainName
+            Id: !Sub "${AWS::StackName}-origin"
+            S3OriginConfig: {}
+            OriginAccessControlId: !Ref OAC
+        DefaultCacheBehavior:
+          TargetOriginId: !Sub "${AWS::StackName}-origin"
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: ["GET", "HEAD"]
+          CachedMethods: ["GET", "HEAD"]
+          Compress: true
+          ForwardedValues:
+            QueryString: false
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SiteBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowCloudFrontAccess
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: "s3:GetObject"
+            Resource: !Sub "${SiteBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                "AWS:SourceArn": !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
+
+Outputs:
+  CloudFrontURL:
+    Description: URL of CloudFront distribution
+    Value: !Sub "https://${CloudFrontDistribution.DomainName}"
+  S3BucketName:
+    Description: Name of S3 bucket for uploads
+    Value: !Ref SiteBucketName

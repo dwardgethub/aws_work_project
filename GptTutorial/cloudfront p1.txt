@@ -1,0 +1,26 @@
+cloudfront p1:
+dist-id:d2w48dwf2xbvzu.cloudfront.net
+ARN: arn:aws:cloudfront::205930604998:distribution/E1VJPV27W1PH1I
+
+{
+	"Version": "2008-10-17",
+	"Id": "PolicyForCloudFrontPrivateContent",
+	"Statement": [
+		{
+			"Sid": "AllowCloudFrontServicePrincipal",
+			"Effect": "Allow",
+			"Principal": {
+				"Service": "cloudfront.amazonaws.com"
+			},
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::dw-demo-site-p1/*",
+			"Condition": {
+				"ArnLike": {
+					"AWS:SourceArn": "arn:aws:cloudfront::205930604998:distribution/E1VJPV27W1PH1I"
+				}
+			}
+		}
+	]
+}
+
+Administrator

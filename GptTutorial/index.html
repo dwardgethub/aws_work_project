@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo Static Site</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; text-align:center; padding:40px; }
+    h1 { color:#1f6feb; }
+    p { color:#333; }
+    .box { border:1px solid #eee; padding:20px; margin-top:20px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <h1>Demo Static Site</h1>
+  <p>This is a simple static site hosted in Amazon S3 and delivered via CloudFront.</p>
+  <div class="box">
+    <strong>Deployed by:</strong> Dennis Ward<br/>
+    <small>Try refreshing to test CloudFront caching.</small>
+  </div>
+</body>
+</html>
+
+
+cloudfront p1:
+dist-id:d2w48dwf2xbvzu.cloudfront.net
+ARN: arn:aws:cloudfront::205930604998:distribution/E1VJPV27W1PH1I
+
+{
+	"Version": "2008-10-17",
+	"Id": "PolicyForCloudFrontPrivateContent",
+	"Statement": [
+		{
+			"Sid": "AllowCloudFrontServicePrincipal",
+			"Effect": "Allow",
+			"Principal": {
+				"Service": "cloudfront.amazonaws.com"
+			},
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::dw-demo-site-p1/*",
+			"Condition": {
+				"ArnLike": {
+					"AWS:SourceArn": "arn:aws:cloudfront::205930604998:distribution/E1VJPV27W1PH1I"
+				}
+			}
+		}
+	]
+}
