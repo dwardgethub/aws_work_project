@@ -1,0 +1,4 @@
+961906276856.dkr.ecr.us-east-1.amazonaws.com/my_app:latest
+
+snd task:
+961906276856.dkr.ecr.us-east-1.amazonaws.com/my_second_app:latest
