@@ -137,7 +137,7 @@ class CdkappStack(Stack):
         # add a listener on port 80 to the load balancer with open=True 
         listener = alb.add_listener("Listener",
             port=80,
-            open=True,
+            open=True
         )
 
         # add targets to the load balancer using port 80
