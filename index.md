@@ -1,6 +1,27 @@
 # ☁️ AWS Cloud Architecture Portfolio
 A collection of cloud labs and infrastructure designs I've implemented.
 
+## 🛠️ Featured Lab: Tic Tac Toe
+### 📌 Overview
+Multi-player tic tac toe game.
+
+### 🗺️ Architecture Diagram
+![AWS Topology Diagram](https://github.com/dwardgethub/aws_work_project/blob/main/tictactoe/archive/TicTacToe_AWS.png)
+
+### 🚀 Key Services Used
+* **DynamoDB**: Create tables.
+* **IAM**: Create lambda roles
+* **Lambda**: deploy 5 functions
+* **API Gateway**: WebSocket API
+* **S3 + CloudFront**: Host frontend
+
+### 💡 Lessons Learned
+* [Point 1: Create tables in dynamodb.]
+* [Point 2: Create IAM roles.]
+* [Point 3: Create lambda functions.]
+* [Point 4: Create websocket api]
+* [Creat S3 buckets and use CloudFront for CDN deployment and OAC provisioning]
+
 ## 🛠️ Featured Lab: Cloud Infrastructure with Generative AI
 ### 📌 Overview
 Speed up and automate the deployment & management of cloud infrastructure by using the AWS CDK and Amazon Q.
