@@ -20,7 +20,7 @@ Multi-player tic tac toe game.
 * [Point 2: Create IAM roles.]
 * [Point 3: Create lambda functions.]
 * [Point 4: Create websocket api]
-* [Creat S3 buckets and use CloudFront for CDN deployment and OAC provisioning]
+* [Point 5: Create S3 buckets and use CloudFront for CDN deployment and OAC provisioning]
 
 ## 🛠️ Featured Lab: Cloud Infrastructure with Generative AI
 ### 📌 Overview
