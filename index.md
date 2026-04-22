@@ -6,7 +6,7 @@ A collection of cloud labs and infrastructure designs I've implemented.
 Multi-player tic tac toe game.
 
 ### 🗺️ Architecture Diagram
-![AWS Topology Diagram](https://github.com/dwardgethub/aws_work_project/blob/main/tictactoe/archive/TicTacToe_AWS.png)
+![AWS Topology Diagram](https://github.com/dwardgethub/aws_work_project/blob/main/tictactoe/archive/tttArch.png)
 
 ### 🚀 Key Services Used
 * **DynamoDB**: Create tables.
