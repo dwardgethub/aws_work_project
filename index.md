@@ -4,6 +4,58 @@ This portfolio showcases hands-on AWS architecture across serverless computing, 
 
 ---
 
+## 🌟 Flagship Project: Tic Tac Toe with Claude AI Integration
+
+### 📌 Overview
+
+An AI-enhanced, real-time multiplayer Tic Tac Toe game that extends a fully serverless AWS backend with a live Claude AI opponent — demonstrating how generative AI can be integrated into production cloud architectures as a first-class, event-driven service. Players choose between human-vs-human multiplayer (via WebSocket) or human-vs-AI mode, where an AWS Lambda function invokes the Anthropic Claude API in real time to generate intelligent game moves.
+
+This project showcases the full intersection of modern cloud-native architecture and applied generative AI — a pattern directly applicable to AI-assisted enterprise applications, intelligent automation, and real-time decision support systems.
+
+### 🗺️ Architecture Diagram
+
+![AWS + Claude AI Architecture](https://github.com/dwardgethub/aws_work_project/raw/main/tictactoe/archive/tttArch_Claude.png)
+
+> *Left: existing serverless stack (CloudFront, S3, API Gateway, Lambda, DynamoDB). Right: new AI layer (ttt-aiMove Lambda → Claude API). Dashed line indicates AI mode invocation path.*
+
+### 🚀 Key Services Used
+
+| Service | Role |
+|---|---|
+| **CloudFront** | Global CDN delivery of the frontend with low-latency edge caching |
+| **S3** | Static frontend hosting (HTML + game mode selector) with OAC security |
+| **API Gateway** | WebSocket API managing persistent, bidirectional player connections |
+| **Lambda (5 functions)** | Route handlers for game logic, player events, and AI move orchestration |
+| **DynamoDB** | Real-time game state and active connection persistence |
+| **ttt-aiMove Lambda** | Dedicated AI invocation function — isolates Claude API calls from core game logic |
+| **Claude API (Anthropic)** | Generative AI engine providing intelligent, context-aware game moves |
+| **IAM** | Least-privilege execution roles scoped per Lambda function |
+| **CloudWatch** | End-to-end observability across all Lambda functions and AI invocations |
+
+### 🏗️ Architectural Design Decisions
+
+**Why a dedicated `ttt-aiMove` Lambda?**
+Isolating the Claude API invocation into its own Lambda function enforces a clean separation of concerns — the core game logic remains unaware of the AI provider, making it trivial to swap models or add fallback logic. This mirrors a microservices pattern used in production AI-integrated systems.
+
+**WebSocket + AI: complementary patterns**
+WebSocket connections handle the real-time human interaction layer (sub-100ms state sync), while the AI invocation path operates as an async event triggered only when AI mode is active. This prevents AI latency from impacting the human multiplayer experience — a critical design consideration for mixed-mode applications.
+
+**Cost-optimized AI integration**
+By invoking the Claude API only on AI-mode turns and scoping prompts tightly to game state, the per-game API cost approaches ~$0 — demonstrating that generative AI can be embedded in consumer-grade applications without prohibitive inference cost.
+
+**Tablet as the AI client**
+The architecture designates the tablet client as the AI-mode entry point, illustrating how device-specific UX flows can route to entirely different backend paths within the same unified API Gateway — a pattern applicable to multi-persona enterprise applications.
+
+### 💡 Key Architectural Takeaways
+
+- **GenAI as a microservice:** Wrapping Claude API calls in a dedicated Lambda function creates a reusable, independently scalable AI invocation layer — a pattern directly applicable to enterprise AI assistants, copilots, and decision-support tools
+- **Stateful WebSocket + stateless AI:** Combining persistent WebSocket connections for real-time UX with stateless AI API calls per turn is a clean architectural boundary that keeps both layers independently testable and deployable
+- **Separation of existing and new stacks:** The clean left/right division in the architecture — existing serverless stack vs. new AI additions — reflects a real-world incremental AI adoption pattern, where AI capability is layered onto existing infrastructure without rearchitecting the core
+- **Cost-aware AI design:** Scoping Claude API invocations to discrete game events (not continuous streams) demonstrates disciplined prompt engineering and cost governance — skills increasingly valued in enterprise AI solution architecture
+- **End-to-end observability:** CloudWatch captures Lambda execution metrics, DynamoDB read/write units, and Claude API response latency in a unified view — providing the operational telemetry needed to manage AI-integrated systems in production
+
+---
+
 ## 🛠️ Featured Lab: Tic Tac Toe (Real-Time Multiplayer)
 
 ### 📌 Overview
