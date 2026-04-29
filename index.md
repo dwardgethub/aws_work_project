@@ -14,7 +14,7 @@ This project showcases the full intersection of modern cloud-native architecture
 
 ### 🗺️ Architecture Diagram
 
-![AWS + Claude AI Architecture](https://github.com/dwardgethub/aws_work_project/raw/main/tictactoe/archive/tttArch_Claude.png)
+![AWS + Claude AI Architecture](https://github.com/dwardgethub/aws_work_project/raw/main/tictactoe/archive/tttArch_Claude_clean.png)
 
 > *Left: existing serverless stack (CloudFront, S3, API Gateway, Lambda, DynamoDB). Right: new AI layer (ttt-aiMove Lambda → Claude API). Dashed line indicates AI mode invocation path.*
 
